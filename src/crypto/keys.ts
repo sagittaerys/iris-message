@@ -12,8 +12,9 @@ const PBKDF2_HASH = 'SHA-256'
 const SALT_LENGTH = 16
 const WRAP_KEY_LENGTH = 256
 
-export function bufferToBase64(buffer: ArrayBuffer): string {
-  return btoa(String.fromCharCode(...new Uint8Array(buffer)))
+export function bufferToBase64(buffer: ArrayBuffer | Uint8Array): string {
+  const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer)
+  return btoa(String.fromCharCode(...bytes))
 }
 
 export function base64ToBuffer(b64: string): ArrayBuffer {
