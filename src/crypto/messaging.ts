@@ -22,6 +22,7 @@ export async function encryptMessagePayload(
   recipientPublicKeyB64: string,
   senderPublicKey: CryptoKey,
 ): Promise<EncryptedPayload> {
+  console.log('[encrypt] plaintext:', JSON.stringify(plaintext)) 
   const enc = new TextEncoder()
 
  
@@ -59,7 +60,7 @@ export async function encryptMessagePayload(
 
   return {
     ciphertext: bufferToBase64(ciphertextBuffer),
-    iv: bufferToBase64(iv.buffer),
+    iv: bufferToBase64(iv),
     encrypted_key: bufferToBase64(encryptedKeyForRecipient),
     encrypted_key_for_self: bufferToBase64(encryptedKeyForSelf),
   }

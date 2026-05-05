@@ -81,11 +81,13 @@ export interface KeyPairBundle {
 
 // messages
 export interface SendMessagePayload {
-  recipient_id: string
-  ciphertext: string
-  iv: string
-  encrypted_key: string
-  encrypted_key_for_self: string
+  to: string
+  payload: {
+    ciphertext: string
+    iv: string
+    encrypted_key: string
+    encrypted_key_for_self: string
+  }
 }
 
 export interface MessageResponse {

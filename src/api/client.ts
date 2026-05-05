@@ -47,6 +47,7 @@ export async function apiRequest<T>(
     let detail = `HTTP ${response.status}`
     try {
       const err = (await response.json()) as ApiErrorBody
+      console.log('[apiRequest] error body:', JSON.stringify(err, null, 2))
       detail = err.detail ?? detail
     } catch {
      

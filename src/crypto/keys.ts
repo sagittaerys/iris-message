@@ -102,8 +102,8 @@ export async function wrapPrivateKey(
 
   return {
     wrappedPrivateKey: bufferToBase64(wrappedBuffer),
-    pbkdf2Salt: bufferToBase64(salt.buffer as ArrayBuffer),
-    iv: bufferToBase64(iv.buffer as ArrayBuffer),
+    pbkdf2Salt: bufferToBase64(salt),  
+    iv: bufferToBase64(iv),    
   }
 }
 

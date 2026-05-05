@@ -78,10 +78,14 @@ export function useMessages() {
         );
 
         const message = await apiSendMessage({
-          recipient_id: recipientId,
-          ...payload,
+          to: recipientId,
+          payload: {
+            ciphertext: payload.ciphertext,
+            iv: payload.iv,
+            encrypted_key: payload.encrypted_key,
+            encrypted_key_for_self: payload.encrypted_key_for_self,
+          },
         });
-
         const { addMessage } = useMessageStore.getState();
         await addMessage(message, user.id, privateKey);
 
