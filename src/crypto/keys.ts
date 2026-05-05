@@ -1,31 +1,18 @@
-/**
- * crypto/keys.ts
- *
- * Handles all RSA-OAEP key generation, PBKDF2 key derivation,
- * AES-KW wrapping/unwrapping of private keys.
- *
- * SECURITY INVARIANTS:
- *   - Private keys are NEVER exported as raw bytes to any storage
- *   - Private keys live only as non-extractable CryptoKey objects in memory
- *   - Wrapped private keys are encrypted with an AES-KW key derived from the user's password
- *   - PBKDF2 salt is 128 bits, 310,000 iterations (OWASP 2023 recommendation)
- */
-
 import { KeyPairBundle, WrappedKeyBundle } from '@/types'
 
 const RSA_PARAMS: RsaHashedKeyGenParams = {
   name: 'RSA-OAEP',
   modulusLength: 2048,
-  publicExponent: new Uint8Array([1, 0, 1]), // 65537
+  publicExponent: new Uint8Array([1, 0, 1]), 
   hash: 'SHA-256',
 }
 
 const PBKDF2_ITERATIONS = 310_000
 const PBKDF2_HASH = 'SHA-256'
-const SALT_LENGTH = 16  // 128 bits
-const WRAP_KEY_LENGTH = 256 // AES-KW 256-bit
+const SALT_LENGTH = 16  
+const WRAP_KEY_LENGTH = 256 
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+
 
 export function bufferToBase64(buffer: ArrayBuffer): string {
   return btoa(String.fromCharCode(...new Uint8Array(buffer)))
@@ -40,20 +27,15 @@ export function base64ToBuffer(b64: string): ArrayBuffer {
   return bytes.buffer
 }
 
-// ─── PBKDF2 ──────────────────────────────────────────────────────────────────
 
-/**
- * Generates a cryptographically random 128-bit salt.
- */
+
+// generates a random salt for PBKDF2 key derivation
 export function generateSalt(): Uint8Array<ArrayBuffer> {
   const buf = new ArrayBuffer(SALT_LENGTH)
   return crypto.getRandomValues(new Uint8Array(buf))
 }
 
-/**
- * Derives an AES-KW wrapping key from a password and salt using PBKDF2.
- * The derived key is used exclusively for wrapping/unwrapping the RSA private key.
- */
+// this part derives a wrapping key from the user's password and salt, used for both wrapping and unwrapping private keys
 async function deriveWrappingKey(
   password: string,
   salt: Uint8Array<ArrayBuffer>,
