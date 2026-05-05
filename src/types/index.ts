@@ -1,10 +1,11 @@
 // auth
 export interface RegisterPayload {
   username: string
+  display_name: string       
   password: string
-  public_key: string          
-  wrapped_private_key: string 
-  pbkdf2_salt: string         
+  public_key: string
+  wrapped_private_key: string
+  pbkdf2_salt: string
 }
 
 export interface LoginPayload {
@@ -48,8 +49,9 @@ export interface UserSearchResult {
 
 // crypto
 export interface WrappedKeyBundle {
-  wrappedPrivateKey: string 
-  pbkdf2Salt: string        
+  wrappedPrivateKey: string
+  pbkdf2Salt: string
+  iv: string
 }
 
 export interface EncryptedPayload {
@@ -79,22 +81,26 @@ export interface KeyPairBundle {
 
 // messages
 export interface SendMessagePayload {
-  recipient_id: string
-  ciphertext: string
-  iv: string
-  encrypted_key: string
-  encrypted_key_for_self: string
+  to: string
+  payload: {
+    ciphertext: string
+    iv: string
+    encrypted_key: string
+    encrypted_key_for_self: string
+  }
 }
 
 export interface MessageResponse {
   id: string
-  sender_id: string
-  sender_username: string
-  recipient_id: string
-  ciphertext: string
-  iv: string
-  encrypted_key: string
-  encrypted_key_for_self: string
+  from_user_id: string
+  to_user_id: string
+  payload: {
+    ciphertext: string
+    iv: string
+    encryptedKey: string
+    encryptedKeyForSelf: string
+  }
+  delivered: boolean
   created_at: string
 }
 
@@ -116,11 +122,13 @@ export interface ConversationSummary {
 
 export interface WSMessageSendFrame {
   type: 'message.send'
-  recipient_id: string
-  ciphertext: string
-  iv: string
-  encrypted_key: string
-  encrypted_key_for_self: string
+  to: string
+  payload: {
+    ciphertext: string
+    iv: string
+    encrypted_key: string
+    encrypted_key_for_self: string
+  }
 }
 
 export interface WSMessageReceiveFrame {

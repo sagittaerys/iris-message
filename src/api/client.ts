@@ -1,6 +1,6 @@
 import { ApiError, ApiErrorBody } from '@/types'
 
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
 
 let _accessToken: string | null = null
@@ -47,6 +47,7 @@ export async function apiRequest<T>(
     let detail = `HTTP ${response.status}`
     try {
       const err = (await response.json()) as ApiErrorBody
+      console.log('[apiRequest] error body:', JSON.stringify(err, null, 2))
       detail = err.detail ?? detail
     } catch {
      
