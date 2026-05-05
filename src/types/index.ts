@@ -1,10 +1,11 @@
 // auth
 export interface RegisterPayload {
   username: string
+  display_name: string       
   password: string
-  public_key: string          
-  wrapped_private_key: string 
-  pbkdf2_salt: string         
+  public_key: string
+  wrapped_private_key: string
+  pbkdf2_salt: string
 }
 
 export interface LoginPayload {
@@ -48,8 +49,9 @@ export interface UserSearchResult {
 
 // crypto
 export interface WrappedKeyBundle {
-  wrappedPrivateKey: string 
-  pbkdf2Salt: string        
+  wrappedPrivateKey: string
+  pbkdf2Salt: string
+  iv: string
 }
 
 export interface EncryptedPayload {

@@ -8,6 +8,7 @@ interface StoredKeyBundle {
   wrappedPrivateKey: string;
   pbkdf2Salt: string;
   publicKeyB64: string;
+  iv: string;
 }
 
 const DB_NAME = "iris_vault";
@@ -77,6 +78,7 @@ export async function saveKeyBundle(bundle: {
   wrappedPrivateKey: string;
   pbkdf2Salt: string;
   publicKeyB64: string;
+  iv: string;
 }): Promise<void> {
   await idbSet<StoredKeyBundle>(KEY_STORE, { id: "key_bundle", ...bundle });
 }
