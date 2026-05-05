@@ -65,17 +65,17 @@ export function useMessages() {
         );
 
         // log to be sure of what's being encrypted
-        console.log(
-          "[send] payload:",
-          JSON.stringify(
-            {
-              recipient_id: recipientId,
-              ...payload,
-            },
-            null,
-            2,
-          ),
-        );
+        // console.log(
+        //   "[send] payload:",
+        //   JSON.stringify(
+        //     {
+        //       recipient_id: recipientId,
+        //       ...payload,
+        //     },
+        //     null,
+        //     2,
+        //   ),
+        // );
 
         const message = await apiSendMessage({
           to: recipientId,
@@ -86,6 +86,9 @@ export function useMessages() {
             encrypted_key_for_self: payload.encrypted_key_for_self,
           },
         });
+
+        console.log('[addMessage] server response:', JSON.stringify(message, null, 2)) 
+        
         const { addMessage } = useMessageStore.getState();
         await addMessage(message, user.id, privateKey);
 

@@ -3,8 +3,7 @@ import { DecryptedMessage, EncryptedPayload, MessageResponse } from '@/types'
 import { decryptMessage } from '@/crypto/messaging'
 
 interface MessageState {
-   conversations: Record<string, DecryptedMessage[]>
-
+  conversations: Record<string, DecryptedMessage[]>
   cursors: Record<string, string | null>
 
   addMessage: (
@@ -31,29 +30,29 @@ async function decryptSafe(
   privateKey: CryptoKey,
 ): Promise<DecryptedMessage> {
   const payload: EncryptedPayload = {
-    ciphertext: msg.ciphertext,
-    iv: msg.iv,
-    encrypted_key: msg.encrypted_key,
-    encrypted_key_for_self: msg.encrypted_key_for_self,
+    ciphertext: msg.payload.ciphertext,
+    iv: msg.payload.iv,
+    encrypted_key: msg.payload.encryptedKey,
+    encrypted_key_for_self: msg.payload.encryptedKeyForSelf,
   }
-  const isSentByMe = msg.sender_id === currentUserId
+  const isSentByMe = msg.from_user_id === currentUserId
 
   try {
     const plaintext = await decryptMessage(payload, privateKey, isSentByMe)
     return {
       id: msg.id,
-      senderId: msg.sender_id,
-      senderUsername: msg.sender_username,
-      recipientId: msg.recipient_id,
+      senderId: msg.from_user_id,
+      senderUsername: '',
+      recipientId: msg.to_user_id,
       plaintext,
       timestamp: msg.created_at,
     }
   } catch {
     return {
       id: msg.id,
-      senderId: msg.sender_id,
-      senderUsername: msg.sender_username,
-      recipientId: msg.recipient_id,
+      senderId: msg.from_user_id,
+      senderUsername: '',
+      recipientId: msg.to_user_id,
       plaintext: '',
       timestamp: msg.created_at,
       decryptionFailed: true,
@@ -61,18 +60,17 @@ async function decryptSafe(
   }
 }
 
-export const useMessageStore = create<MessageState>((set, get) => ({
+export const useMessageStore = create<MessageState>((set) => ({
   conversations: {},
   cursors: {},
 
   addMessage: async (message, currentUserId, privateKey) => {
     const decrypted = await decryptSafe(message, currentUserId, privateKey)
     const partnerId =
-      message.sender_id === currentUserId ? message.recipient_id : message.sender_id
+      message.from_user_id === currentUserId ? message.to_user_id : message.from_user_id
 
     set((state) => {
       const existing = state.conversations[partnerId] ?? []
-      // preventing deduplication here.... man i hate this 
       if (existing.some((m) => m.id === decrypted.id)) return state
       return {
         conversations: {
@@ -95,7 +93,6 @@ export const useMessageStore = create<MessageState>((set, get) => ({
       return {
         conversations: {
           ...state.conversations,
-          // API returns newest-first; I want oldest-first in the array
           [userId]: [...fresh.reverse(), ...existing],
         },
         cursors: {

@@ -21,25 +21,24 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
   setActiveUserId: (userId) => set({ activeUserId: userId }),
 
   upsertFromMessage: (msg, currentUserId) => {
-    const partnerId = msg.sender_id === currentUserId ? msg.recipient_id : msg.sender_id
-    const partnerUsername =
-      msg.sender_id === currentUserId ? msg.recipient_id : msg.sender_username
+  const partnerId = msg.from_user_id === currentUserId ? msg.to_user_id : msg.from_user_id
+  const partnerUsername = msg.from_user_id === currentUserId ? msg.to_user_id : msg.from_user_id
 
-    set((state) => {
-      const existing = state.conversations.find((c) => c.user_id === partnerId)
-      const updated: ConversationSummary = existing
-        ? { ...existing, last_message: msg }
-        : {
-            user_id: partnerId,
-            username: partnerUsername,
-            last_message: msg,
-            unread_count: msg.sender_id !== currentUserId ? 1 : 0,
-          }
+  set((state) => {
+    const existing = state.conversations.find((c) => c.user_id === partnerId)
+    const updated: ConversationSummary = existing
+      ? { ...existing, last_message: msg }
+      : {
+          user_id: partnerId,
+          username: partnerUsername,
+          last_message: msg,
+          unread_count: msg.from_user_id !== currentUserId ? 1 : 0,
+        }
 
-      const filtered = state.conversations.filter((c) => c.user_id !== partnerId)
-      return { conversations: [updated, ...filtered] }
-    })
-  },
+    const filtered = state.conversations.filter((c) => c.user_id !== partnerId)
+    return { conversations: [updated, ...filtered] }
+  })
+},
 
   startConversationWith: (userId, username) => {
     const exists = get().conversations.some((c) => c.user_id === userId)
