@@ -12,7 +12,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
     if (!username.trim() || !password) { setError('Please fill in all fields'); return }
@@ -31,12 +31,12 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
         <Input
           type="text"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           placeholder="Your Username"
           autoComplete="username"
           autoFocus
           disabled={loading}
-          className="h-12 px-4 rounded-2xl bg-zinc-50 border-zinc-200 text-sm placeholder:text-zinc-300 pl-4 focus-visible:border-zinc-900 focus-visible:ring-0"
+          className="h-12 px-4 rounded-2xl bg-zinc-50 border-zinc-200 text-sm placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0"
         />
       </div>
 
@@ -49,7 +49,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
           <Input
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             placeholder="••••••••"
             autoComplete="current-password"
             disabled={loading}
