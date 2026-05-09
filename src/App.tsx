@@ -1,38 +1,58 @@
 import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { ShieldCheck } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { useConversationStore } from '@/store/conversationStore'
-import { useMessageStore } from '@/store/messageStore'
 import { useWebSocket } from '@/hooks/useWebSocket'
 import { getConversations } from '@/api/messages'
 import { LoginForm } from '@/components/auth/LoginForm'
 import { RegisterForm } from '@/components/auth/RegisterForm'
 import { ConversationList } from '@/components/chat/ConversationList'
 import { ChatPane } from '@/components/chat/ChatPane'
-import { EncryptionBadge } from '@/components/ui/EncryptionBadge'
 
 
 
-function ChatShell() {
-  const { setConversations } = useConversationStore()
-  const { user, privateKey } = useAuthStore()
-  const { conversations: messageMap } = useMessageStore()
-
-
-  useWebSocket()
-
-  
+function SplashScreen({ onDone }: { onDone: () => void }) {
   useEffect(() => {
-    getConversations()
-      .then(setConversations)
-      .catch(() => {})
-  }, [])
+    const t = setTimeout(onDone, 2400)
+    return () => clearTimeout(t)
+  }, [onDone])
 
   return (
-    <div className="flex h-full">
-      <ConversationList />
-      <ChatPane />
-    </div>
+    <motion.div
+      className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center"
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col items-center gap-6"
+      >
+        <div className="w-16 h-16 rounded-2xl bg-zinc-900 flex items-center justify-center">
+          <ShieldCheck className="w-8 h-8 text-white" strokeWidth={1.5} />
+        </div>
+        <div className="text-center">
+          <h1 style={{ fontFamily: 'Syne, sans-serif' }} className="text-4xl font-bold tracking-tight text-zinc-900">
+            Iris
+          </h1>
+          <p className="text-sm text-zinc-400 mt-1 tracking-wide">
+            end-to-end encrypted
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Progress bar */}
+      <div className="absolute bottom-16 w-32 h-[2px] bg-zinc-100 rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-zinc-900 rounded-full"
+          initial={{ width: '0%' }}
+          animate={{ width: '100%' }}
+          transition={{ duration: 2, ease: 'linear' }}
+        />
+      </div>
+    </motion.div>
   )
 }
 
@@ -42,45 +62,63 @@ function AuthScreen() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
 
   return (
-    <div className="flex h-full items-center justify-center bg-[#0a0a0f] px-4">
-      {/* Ambient glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#7c5ef6]/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 left-1/3 w-80 h-80 bg-[#38bdf8]/8 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative w-full max-w-sm animate-fade-in">
-        {/* Logo */}
-        <div className="flex flex-col items-center gap-3 mb-10">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7c5ef6] to-[#38bdf8] flex items-center justify-center shadow-[0_0_32px_rgba(124,94,246,0.4)]">
+    <div className="flex h-full items-center justify-center bg-white px-6">
+      <motion.div
+        key={mode}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-sm"
+      >
+        {/* logo */}
+        <div className="flex flex-col items-center gap-4 mb-10">
+          <div className="w-14 h-14 rounded-2xl bg-zinc-900 flex items-center justify-center">
             <ShieldCheck className="w-7 h-7 text-white" strokeWidth={1.5} />
           </div>
           <div className="text-center">
-            <h1 className="text-2xl font-bold tracking-tight iris-gradient-text">Iris</h1>
-            <p className="text-sm text-[#6b6785] mt-1">Secure messaging, end-to-end</p>
+            <h1 style={{ fontFamily: 'Syne, sans-serif' }} className="text-3xl font-bold text-zinc-900 tracking-tight">
+              Iris
+            </h1>
+            <p className="text-sm text-zinc-400 mt-1">Private. Secure. Yours.</p>
           </div>
-          <EncryptionBadge encrypted verbose />
         </div>
 
-        {/* card */}
-        <div className="glass rounded-2xl p-8">
-          <h2 className="text-lg font-semibold text-[#f0efff] mb-6">
-            {mode === 'login' ? 'Welcome back' : 'Create your account'}
-          </h2>
+        
+        {/* Form */}
+        {mode === 'login' ? (
+          <LoginForm onSwitch={() => setMode('register')} />
+        ) : (
+          <RegisterForm onSwitch={() => setMode('login')} />
+        )}
 
-          {mode === 'login' ? (
-            <LoginForm onSwitch={() => setMode('register')} />
-          ) : (
-            <RegisterForm onSwitch={() => setMode('login')} />
-          )}
-        </div>
-
-        {/* Footer note */}
-        <p className="text-center text-xs text-[#3d3a52] mt-6 leading-relaxed">
-          Your private key never leaves your device.
-          <br />
-          Messages are encrypted before they reach our servers.
+        {/* footer */}
+        <p className="text-center text-xs text-zinc-300 mt-8 leading-relaxed">
+          Your private key never leaves this device
         </p>
+      </motion.div>
+    </div>
+  )
+}
+
+
+
+function ChatShell() {
+  const { setConversations } = useConversationStore()
+  const { activeUserId } = useConversationStore()
+  useWebSocket()
+
+  useEffect(() => {
+    getConversations().then(setConversations).catch(() => {})
+  }, [])
+
+  return (
+    <div className="flex h-full bg-white overflow-hidden">
+      {/* mobile */}
+      <div className={`${activeUserId ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-80 shrink-0`}>
+        <ConversationList />
+      </div>
+      <div className={`${!activeUserId ? 'hidden md:flex' : 'flex'} flex-1 flex-col min-w-0`}>
+        <ChatPane />
       </div>
     </div>
   )
@@ -89,6 +127,34 @@ function AuthScreen() {
 
 
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false)
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
-  return isAuthenticated ? <ChatShell /> : <AuthScreen />
+
+  return (
+    <AnimatePresence mode="wait">
+      {!splashDone ? (
+        <SplashScreen key="splash" onDone={() => setSplashDone(true)} />
+      ) : isAuthenticated ? (
+        <motion.div
+          key="chat"
+          className="h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ChatShell />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="auth"
+          className="h-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <AuthScreen />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
 }
