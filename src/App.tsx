@@ -86,7 +86,7 @@ function AuthScreen() {
         </div>
 
         
-        {/* Form */}
+        {/* form */}
         {mode === 'login' ? (
           <LoginForm onSwitch={() => setMode('register')} />
         ) : (
