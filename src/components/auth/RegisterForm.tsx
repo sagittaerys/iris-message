@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { Input } from '@/components/ui/input'
+import { Input } from "@/components/ui/input"
 
 interface RegisterFormProps { onSwitch: () => void }
 
