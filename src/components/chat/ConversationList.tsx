@@ -20,11 +20,11 @@ export function ConversationList() {
 
   return (
     <>
-      <div className="flex flex-col w-full px-5 h-full bg-white border-r border-zinc-400">
+      <div className="flex flex-col  px-5 h-full bg-white border-r border-zinc-400">
 
         {/* Header */}
-        <div className="px-5 flex items-center justify-between  h-[15%] ">
-          <div className="flex items-center gap-20">
+        <div className="px-5 flex items-center    h-[15%]  ">
+          <div className="flex items-center md:gap-20 gap-40">
             <div>
               <p className="text-[13px] text-zinc-400 font-medium mb-0.5">
                 Hi, {capitalize(user?.username ?? '')}
