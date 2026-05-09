@@ -49,7 +49,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
           type="text"
           value={username}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-          placeholder="    Your Username"
+          placeholder="Your Username"
           autoComplete="username"
           autoFocus
           disabled={loading}
@@ -68,7 +68,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-            placeholder="    ••••••••"
+            placeholder="••••••••"
             autoComplete="new-password"
             disabled={loading}
             className={`${inputClass('password')} pr-12`}
@@ -94,7 +94,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
             type={showPassword ? 'text' : 'password'}
             value={confirm}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirm(e.target.value)}
-            placeholder="    ••••••••"
+            placeholder="••••••••"
             autoComplete="new-password"
             disabled={loading}
             className={`${inputClass('confirm')} pr-12`}

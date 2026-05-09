@@ -7,13 +7,16 @@
   --font-body: "Lato", sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-html { height: 100%; -webkit-font-smoothing: antialiased; }
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
 
 body {
   height: 100%;
@@ -21,34 +24,90 @@ body {
   color: #0a0a0a;
   font-family: "Lato", sans-serif;
   line-height: 1.5;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-#root { height: 100%; display: flex; flex-direction: column; }
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 9999px; }
+::-webkit-scrollbar {
+  width: 3px;
+}
 
-::selection { background: #0a0a0a; color: #ffffff; }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-input, textarea, select, button { font-family: inherit; }
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 9999px;
+}
 
-input:focus, textarea:focus { outline: none; box-shadow: none; }
+::selection {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes slide-right {
-  from { opacity: 0; transform: translateX(-16px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.animate-fade-in   { animation: fade-in 0.25s ease forwards; }
-.animate-fade-up   { animation: fade-up 0.3s ease forwards; }
-.animate-slide-right { animation: slide-right 0.25s ease forwards; }
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease forwards;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.3s ease forwards;
+}
+
+.animate-slide-right {
+  animation: slide-right 0.25s ease forwards;
+}

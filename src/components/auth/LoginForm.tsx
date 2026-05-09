@@ -32,7 +32,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
           type="text"
           value={username}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-          placeholder="    Your Username"
+          placeholder="Your Username"
           autoComplete="username"
           autoFocus
           disabled={loading}
@@ -50,7 +50,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-            placeholder="    ••••••••"
+            placeholder="••••••••"
             autoComplete="current-password"
             disabled={loading}
             className="h-12 px-4 pr-12 rounded-2xl bg-zinc-50 border-zinc-200 text-sm placeholder:text-zinc-300 focus-visible:border-zinc-900 focus-visible:ring-0"
