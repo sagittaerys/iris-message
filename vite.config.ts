@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     target: 'es2022',
     sourcemap: false,
-    minify: 'esbuild',
+    minify: 'oxc',
   },
   server: {
     port: 5173,
