@@ -17,10 +17,10 @@ export function MessageBubble({ message, isMine, isFirst, isLast }: MessageBubbl
   return (
     <div className={cn(
       'flex items-end gap-2 px-4',
-      isMine ? 'justify-end' : 'justify-start',
+      isMine ? 'justify-end pr-3' : 'justify-start pl-3',
       isFirst ? 'mt-3' : 'mt-0.5',
     )}>
-      {/* Avatar — only for theirs, only on last in group */}
+     
       {!isMine && (
         <div className={cn('w-7 h-7 rounded-full shrink-0 mb-0.5', isLast ? 'bg-zinc-200 flex items-center justify-center' : 'invisible')}>
           {isLast && (

@@ -20,11 +20,11 @@ export function ConversationList() {
 
   return (
     <>
-      <div className="flex flex-col w-full px-5 h-full bg-white border-r border-zinc-400">
+      <div className="flex flex-col h-full bg-white border-r border-zinc-100">
 
         {/* Header */}
-        <div className="px-5 flex items-center justify-between  h-[15%] ">
-          <div className="flex items-center gap-20">
+        <div className="px-5 pt-10 pb-5">
+          <div className="flex items-start justify-between">
             <div>
               <p className="text-[13px] text-zinc-400 font-medium mb-0.5">
                 Hi, {capitalize(user?.username ?? '')}
@@ -36,7 +36,7 @@ export function ConversationList() {
                 Messages
               </h1>
             </div>
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 mt-1">
               <button
                 onClick={() => setSearchOpen(true)}
                 className="w-9 h-9 rounded-xl bg-zinc-900 text-white flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer"
@@ -46,7 +46,7 @@ export function ConversationList() {
               </button>
               <button
                 onClick={() => logout()}
-                className="w-9 h-9 rounded-xl bg-zinc-100 text-zinc-500 flex items-center justify-center hover:bg-zinc-200 hover:text-red-500 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-xl bg-zinc-100 text-zinc-500 flex items-center justify-center hover:bg-zinc-200 hover:text-zinc-800 transition-colors cursor-pointer"
                 aria-label="Sign out"
               >
                 <LogOut className="w-4 h-4" />
@@ -54,7 +54,13 @@ export function ConversationList() {
             </div>
           </div>
 
-         
+          {/* E2EE badge */}
+          {/* <div className="flex items-center gap-1.5 mt-4">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" strokeWidth={2.5} />
+            <span className="text-[11px] text-emerald-600 font-semibold tracking-wide">
+              End-to-end encrypted
+            </span>
+          </div> */}
         </div>
 
         {/* Recent contacts row */}
@@ -116,7 +122,7 @@ export function ConversationList() {
               </div>
               <button
                 onClick={() => setSearchOpen(true)}
-                className="h-8 w-25 rounded-md bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-700 transition-colors cursor-pointer mt-1"
+                className="px-4 py-2 rounded-xl bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-700 transition-colors cursor-pointer mt-1"
               >
                 Find someone
               </button>
