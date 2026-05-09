@@ -30,8 +30,9 @@ function SplashScreen({ onDone }: { onDone: () => void }) {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="flex flex-col items-center gap-6"
       >
-        <div className="w-16 h-16 rounded-2xl bg-zinc-900 flex items-center justify-center">
-          <ShieldCheck className="w-8 h-8 text-white" strokeWidth={1.5} />
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
+
+          <img src="/iris-logo.png" alt="Logo" className="w-16 h-16" />
         </div>
         <div className="text-center">
           <h1 style={{ fontFamily: 'Syne, sans-serif' }} className="text-4xl font-bold tracking-tight text-zinc-900">
@@ -72,9 +73,10 @@ function AuthScreen() {
       >
         {/* logo */}
         <div className="flex flex-col items-center gap-4 mb-10">
-          <div className="w-14 h-14 rounded-2xl bg-zinc-900 flex items-center justify-center">
-            <ShieldCheck className="w-7 h-7 text-white" strokeWidth={1.5} />
-          </div>
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
+
+          <img src="/iris-logo.png" alt="Logo" className="w-16 h-16" />
+        </div>
           <div className="text-center">
             <h1 style={{ fontFamily: 'Syne, sans-serif' }} className="text-3xl font-bold text-zinc-900 tracking-tight">
               Iris

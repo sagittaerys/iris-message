@@ -49,7 +49,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
           type="text"
           value={username}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-          placeholder="Your Username"
+          placeholder="    Your Username"
           autoComplete="username"
           autoFocus
           disabled={loading}
@@ -68,7 +68,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder="    ••••••••"
             autoComplete="new-password"
             disabled={loading}
             className={`${inputClass('password')} pr-12`}
@@ -87,14 +87,14 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
       {/* Confirm password */}
       <div className="flex flex-col gap-2">
         <label className="text-xs font-bold tracking-widest uppercase text-zinc-400" style={{ fontFamily: 'Lato, sans-serif' }}>
-          Confirm password
+          Confirm Password
         </label>
         <div className="relative">
           <Input
             type={showPassword ? 'text' : 'password'}
             value={confirm}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirm(e.target.value)}
-            placeholder="••••••••"
+            placeholder="    ••••••••"
             autoComplete="new-password"
             disabled={loading}
             className={`${inputClass('confirm')} pr-12`}
@@ -114,7 +114,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
         <p className="text-xs text-red-500 text-center animate-fade-in">{errors['form']}</p>
       )}
 
-      <p className="text-xs text-zinc-400 leading-relaxed">
+      <p className="text-xs text-center text-zinc-400 leading-relaxed">
         Your password encrypts your private key locally. We never see it.
       </p>
 
