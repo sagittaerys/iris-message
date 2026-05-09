@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Input } from '@/components/ui/input'
@@ -25,7 +25,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!validate()) return
     const result = await register(username.trim(), password)
@@ -48,7 +48,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
         <Input
           type="text"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           placeholder="Your Username"
           autoComplete="username"
           autoFocus
@@ -67,7 +67,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
           <Input
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             placeholder="••••••••"
             autoComplete="new-password"
             disabled={loading}
@@ -93,7 +93,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
           <Input
             type={showPassword ? 'text' : 'password'}
             value={confirm}
-            onChange={e => setConfirm(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirm(e.target.value)}
             placeholder="••••••••"
             autoComplete="new-password"
             disabled={loading}
@@ -114,7 +114,7 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
         <p className="text-xs text-red-500 text-center animate-fade-in">{errors['form']}</p>
       )}
 
-      <p className="text-xs text-center text-zinc-400 leading-relaxed">
+      <p className="text-xs text-zinc-400 leading-relaxed">
         Your password encrypts your private key locally. We never see it.
       </p>
 
