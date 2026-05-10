@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/iris-logo.png" alt="Iris Banner" width="100%" />
+  <img src="./public/iris-logo.png" alt="Iris Banner" width="120" />
 </div>
 
 # Iris
